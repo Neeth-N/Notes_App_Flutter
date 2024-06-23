@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:notes_app/Provider/note_provider.dart';
 import 'note_detail_screen.dart';
 import 'create_edit_note_screen.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -67,20 +68,46 @@ class HomeScreen extends StatelessWidget {
                       ),
                       height: 60,
                       margin: EdgeInsets.only(top: 9),
-                      child: ListTile(
-                        title: Text(
-                          noteProvider.notes[index].title,
-                          style: TextStyle(fontSize: 20, fontFamily: 'Exo_2'),
-                        ),
-                        trailing: Icon(Icons.chevron_right),
-                        onTap: () {
+                      child: Slidable(
+                        endActionPane: ActionPane(
+                        motion: StretchMotion(),
+                        children: [
+                        SlidableAction(
+                          icon: Icons.edit,
+                          backgroundColor: Theme.of(context).colorScheme.surface,
+                          foregroundColor: Theme.of(context).colorScheme.inversePrimary,
+                          onPressed: (context){
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => NoteDetailScreen(
-                                  note: noteProvider.notes[index]),
-                            ),
-                          );
-                        },
+                              builder: (context) =>  CreateEditNoteScreen(note: noteProvider.notes[index]),),);
+                            },
+                          ),
+                          SlidableAction(
+                            icon: Icons.delete,
+                            backgroundColor: Theme.of(context).colorScheme.surface,
+                            foregroundColor: Theme.of(context).colorScheme.inversePrimary,
+                            //borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.horizontal(right: Radius.circular(10)),
+                            onPressed: (context){
+                            Provider.of<NoteProvider>(context, listen: false)
+                              .deleteNote(noteProvider.notes[index].id);
+                            },)]
+                          ),
+                        child: ListTile(
+                          title: Text(
+                            noteProvider.notes[index].title,
+                            style: TextStyle(fontSize: 20, fontFamily: 'Exo_2'),
+                          ),
+                          trailing: Icon(Icons.chevron_right),
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => NoteDetailScreen(
+                                    note: noteProvider.notes[index]),
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
