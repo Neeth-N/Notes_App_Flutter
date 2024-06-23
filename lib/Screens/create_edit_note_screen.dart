@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:notes_app/Provider/note_provider.dart';
 import 'package:notes_app/model/note.dart';
@@ -65,13 +66,13 @@ class _CreateEditNoteScreenState extends State<CreateEditNoteScreen> {
             content: Text("Are you sure you want to delete this note?"),
             actions: [
               TextButton(
-                child: Text("Cancel"),
+                child: Text("Cancel", style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary), ),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
               TextButton(
-                child: Text("Delete"),
+                child: Text("Delete", style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary),),
                 onPressed: () {
                     Provider.of<NoteProvider>(context, listen: false)
                         .deleteNote(widget.note!.id);
@@ -93,8 +94,8 @@ class _CreateEditNoteScreenState extends State<CreateEditNoteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.amberAccent,
-        title: Text(widget.note == null ? 'New Note' : 'Edit Note', style: TextStyle(color: Colors.white,fontSize: 40, fontFamily:'Teko'),),
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        title: Text(widget.note == null ? 'New Note' : 'Edit Note', style: GoogleFonts.dmSerifText(color: Theme.of(context).colorScheme.inversePrimary,fontSize: 32),),
         actions: [
           if (widget.note != null)
             IconButton(
@@ -171,6 +172,7 @@ class _CreateEditNoteScreenState extends State<CreateEditNoteScreen> {
       floatingActionButton: FloatingActionButton.extended(
         heroTag: 'addtag',
         onPressed: _saveForm,
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         label: Row(
         children: [Icon(Icons.save), Text('Save')],
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:notes_app/model/note.dart';
 import 'package:notes_app/provider/note_provider.dart';
 import 'package:provider/provider.dart';
@@ -57,14 +58,13 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.amberAccent,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         title: Text(
           widget.note?.title ?? 'No Title',
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 35,
-            fontFamily: 'Teko',
-            fontWeight: FontWeight.bold,
+          style: GoogleFonts.dmSerifText(
+            color: Theme.of(context).colorScheme.inversePrimary,
+            fontSize: 30,
+            fontStyle: FontStyle.italic,
           ),
         ),
         actions: [
@@ -83,12 +83,16 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
           // ),
         ],
       ),
-      body: Padding(
+      body: Column(
+        children: [
+          Padding(
         padding: const EdgeInsets.all(16.0),
         child: Text(
           widget.note?.content ?? 'No Content',
-          style: const TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 21),
         ),
+          ),
+        ],
       ),
     );
   }
