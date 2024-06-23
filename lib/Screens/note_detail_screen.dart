@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:notes_app/model/note.dart';
-import 'package:notes_app/provider/note_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:notes_app/Provider/note_provider.dart';
 import 'create_edit_note_screen.dart';
 
 
@@ -18,40 +18,47 @@ class NoteDetailScreen extends StatefulWidget {
 
 class _NoteDetailScreenState extends State<NoteDetailScreen> {
 
+  void _editNote(){
+    Navigator.of(context).pop();
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => CreateEditNoteScreen(note: widget.note),),);
+  }
 
-  // void _deleteNote() {
-  //   if (widget.note != null) {
-  //     showDialog(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return AlertDialog(
-  //           title: Text("Delete Note"),
-  //           content: Text("Are you sure you want to delete this note?"),
-  //           actions: [
-  //             TextButton(
-  //               child: Text("Cancel"),
-  //               onPressed: () {
-  //                 Navigator.of(context).pop();
-  //               },
-  //             ),
-  //             TextButton(
-  //               child: Text("Delete"),
-  //               onPressed: () {
-  //                 Provider.of<NoteProvider>(context, listen: false)
-  //                     .deleteNote(widget.note!.id);
-  //                 Navigator.of(context).pop();
-  //                 Navigator.of(context).pop();
-  //                 ScaffoldMessenger.of(context).showSnackBar(
-  //                     SnackBar(content: Text("Note ${widget.note?.title} Deleted"))
-  //                 );
-  //               },
-  //             ),
-  //           ],
-  //         );
-  //       },
-  //     );
-  //   }
-  // }
+
+  void _deleteNote() {
+    if (widget.note != null) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Delete Note"),
+            content: Text("Are you sure you want to delete this note?"),
+            actions: [
+              TextButton(
+                child: Text("Cancel", style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: Text("Delete", style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary)),
+                onPressed: () {
+                  Provider.of<NoteProvider>(context, listen: false)
+                      .deleteNote(widget.note!.id);
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Note ${widget.note?.title} Deleted"))
+                  );
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
 
 
   @override
@@ -71,16 +78,11 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
           if (widget.note != null)
             IconButton(
               icon: const Icon(Icons.edit),
-              onPressed: (){
-                Navigator.of(context).pop();
-                Navigator.of(context).push(
-                    MaterialPageRoute(
-                    builder: (context) => CreateEditNoteScreen(note: widget.note),),);
-              },
-            ),
-          // IconButton(
-          //     icon: Icon(Icons.delete), onPressed: (_deleteNote),
-          // ),
+              onPressed: (_editNote)),
+          IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: (_deleteNote),
+          )
         ],
       ),
       body: Column(

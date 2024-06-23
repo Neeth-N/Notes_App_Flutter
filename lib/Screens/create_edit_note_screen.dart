@@ -5,6 +5,8 @@ import 'package:notes_app/Provider/note_provider.dart';
 import 'package:notes_app/model/note.dart';
 import 'package:uuid/uuid.dart';
 
+import 'note_detail_screen.dart';
+
 class CreateEditNoteScreen extends StatefulWidget {
   final Note? note;
 

@@ -23,4 +23,15 @@ class NoteProvider with ChangeNotifier{
       notifyListeners();
     }
 
+  void moveNote (int oldIndex, int newIndex) {
+    if (newIndex > oldIndex) {
+      newIndex -= 1;
+    }
+    final note = _notes.removeAt(oldIndex);
+    _notes.insert(newIndex, note);
+    notifyListeners();
   }
+
+}
+
+
